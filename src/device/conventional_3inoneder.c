@@ -2,8 +2,9 @@
  * Conventional Memories 3inONEder for Toshiba portables.
  *
  * The documented sound section uses a Yamaha YMF262-M/YAC512-M pair.  This
- * implementation also covers the author-published XTIDE option ROM and the
- * documented Lo-tech-compatible 8-bit IDE transport. The optional joystick
+ * independent implementation also models the publicly documented XTIDE
+ * option-ROM interface and Lo-tech-compatible 8-bit IDE transport. Firmware
+ * is supplied separately by the user. The optional joystick
  * follows the documented IBM Game Control Adapter schematic and Ethernet
  * uses the documented 8-bit, partially NE2000-compatible default setup.
  *

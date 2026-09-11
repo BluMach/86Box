@@ -11,6 +11,11 @@ Toshiba gate arrays are represented by narrow behavioural models. See the
 [implementation narrative](toshiba-t5200-implementation.md) for the evidence,
 failed hypotheses and replacement criteria behind those compromises.
 
+The optional 3inONEder support is an independent interoperability
+implementation. BluMach and its contributors are not affiliated with or
+endorsed by Conventional Memories. No manufacturer source code, firmware,
+artwork, logos or other product assets are included.
+
 ## Supported configuration
 
 - Intel 80386DX at 20 MHz, with optional 80387 through the normal machine UI.
@@ -27,13 +32,13 @@ failed hypotheses and replacement criteria behind those compromises.
   Toshiba-only **A form factor** instead of ISA-8. With the documented
   Conventional Memories 3inONEder selected, its YMF262-M/YAC512-M OPL3 sound
   section is available at 388h, 220h, 240h or dual 388h/220h decoding. Its CF
-  bridge uses the preserved author ROM at C8000h and I/O 300h (AT-INT) or 320h
-  (AT320INT); each image remains a local firmware input.
-- Dual 388h/220h decoding is the card author's documented default. Disabling
+  bridge uses user-supplied firmware at C8000h and I/O 300h (AT-INT) or 320h
+  (AT320INT); each image remains a separate local input.
+- Dual 388h/220h decoding is the publicly documented default. Disabling
   OPL3 while enabling an XTIDE image represents the CF-only version A.
 - The documented PC joystick port is available at 201h, using the IBM Game
-  Control Adapter-compatible four-axis/four-button behavior described by the
-  card author. Ethernet is optional (version C): it is modeled as the stated
+  Control Adapter-compatible four-axis/four-button behavior described in the
+  public product documentation. Ethernet is optional (version C): it is modeled as the stated
   8-bit, partially NE2000-compatible controller at its documented factory
   default of 300h/IRQ5, without a network boot ROM. Selecting it with XTIDE
   requires the AT320INT image at 320h because 300h belongs to Ethernet.
@@ -55,14 +60,14 @@ BluMach.
 
 The VGA device maps the declared 24 KB image through its 32 KB EPROM dump.
 
-To enable the 3inONEder CompactFlash/XTIDE setting, independently copy the
-matching preserved author image into the local ROM directory; it is not part
-of BluMach:
+To enable the 3inONEder CompactFlash/XTIDE setting, obtain the compatible
+firmware separately and copy it into the local ROM directory. BluMach does not
+provide or distribute it:
 
-| Local file | Source-library asset | I/O base |
+| Local file | Required variant | I/O base |
 |---|---|---:|
-| `roms/machines/t5200/3inoneder/3inoneder-at-int.bin` | `3inoneder-xtide-at-int` | 300h |
-| `roms/machines/t5200/3inoneder/3inoneder-at320int.bin` | `3inoneder-xtide-at320int` | 320h |
+| `roms/machines/t5200/3inoneder/3inoneder-at-int.bin` | AT-INT | 300h |
+| `roms/machines/t5200/3inoneder/3inoneder-at320int.bin` | AT320INT | 320h |
 
 Use the normal hard-disk dialog to create or attach the CompactFlash image as
 an IDE disk on channel **1:0** (or **1:1** for a second device). Channels
@@ -103,7 +108,7 @@ These checks establish a functional vertical slice, not cycle accuracy.
   ISA-8 position; PJ12's 16-bit extension, electrical timing/DMA behavior and
   arbitrary ISA-card compatibility remain unmodeled.
 - The 3inONEder Ethernet model uses a shared 8-bit NE2000-compatible core at
-  the author-documented factory resources. Its exact controller, RSET8019
+  the publicly documented factory resources. Its exact controller, RSET8019
   persistent configuration mechanism, MAC/NVRAM behavior, analogue network
   front end and packet-driver interoperability remain to be validated.
 - External-floppy routing and documented Conner hard disks remain incomplete.

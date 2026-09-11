@@ -187,8 +187,8 @@ static const device_config_t t5200_config[] = {
         .spinner        = { 0 },
         .selection      = {
             { .description = "Disabled (OPL3 section only)", .value = CONVENTIONAL_3INONEDER_XTIDE_NONE },
-            { .description = "AT-INT at 300h (requires local author ROM)", .value = CONVENTIONAL_3INONEDER_XTIDE_AT_INT_300 },
-            { .description = "AT320INT at 320h (requires local author ROM)", .value = CONVENTIONAL_3INONEDER_XTIDE_AT320INT_320 },
+    { .description = "AT-INT at 300h (requires user-supplied firmware)", .value = CONVENTIONAL_3INONEDER_XTIDE_AT_INT_300 },
+    { .description = "AT320INT at 320h (requires user-supplied firmware)", .value = CONVENTIONAL_3INONEDER_XTIDE_AT320INT_320 },
             { .description = "" }
         },
         .bios           = { { 0 } }
