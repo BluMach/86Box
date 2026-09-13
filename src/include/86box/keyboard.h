@@ -233,6 +233,7 @@ extern void     keyboard_set_in_reset(uint8_t in_reset);
 extern uint8_t  keyboard_get_in_reset(void);
 extern void     keyboard_get_states(uint8_t *cl, uint8_t *nl, uint8_t *sl, uint8_t *kl);
 extern void     keyboard_set_states(uint8_t cl, uint8_t nl, uint8_t sl);
+extern int      keyboard_m15_input(int down, uint16_t *scan);
 extern void     keyboard_at_set_scancode_set_persistent(uint8_t persistent);
 extern int      keyboard_recv(uint16_t key);
 extern int      keyboard_recv_ui(uint16_t key);
