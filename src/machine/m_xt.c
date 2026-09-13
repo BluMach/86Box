@@ -50,10 +50,10 @@
 
 /* 8088 */
 static void
-machine_xt_common_init(const machine_t *model, int fixed_floppy)
+machine_xt_common_init_with_fdc(const machine_t *model, int fixed_floppy, const device_t *fixed_fdc)
 {
     if ((fdc_current[0] == FDC_INTERNAL) || fixed_floppy)
-        device_add(&fdc_xt_device);
+        device_add(fixed_fdc ? fixed_fdc : &fdc_xt_device);
 
     machine_common_init(model);
 
@@ -61,6 +61,12 @@ machine_xt_common_init(const machine_t *model, int fixed_floppy)
 
     nmi_init();
     standalone_gameport_type = &gameport_200_device;
+}
+
+static void
+machine_xt_common_init(const machine_t *model, int fixed_floppy)
+{
+    machine_xt_common_init_with_fdc(model, fixed_floppy, NULL);
 }
 
 static const device_config_t ibmpc_config[] = {
@@ -2245,7 +2251,7 @@ machine_xt_olivetti_m15_family_init(const machine_t *model, const device_t *kbc)
     lpt_t *lpt;
 
     device_add(kbc);
-    machine_xt_common_init(model, 1);
+    machine_xt_common_init_with_fdc(model, 1, &fdc_xt_m15_device);
 
     /* Both firmware revisions exercise the timer through the same resident
        diagnostic.  Retain the calibrated M15-family approximation until a

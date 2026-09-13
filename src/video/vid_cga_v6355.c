@@ -237,10 +237,17 @@ v6355_in(uint16_t addr, void *priv)
     uint8_t  ret   = 0xff;
 
     switch (addr) {
+        /* The M15 diagnostics exercise all four decoded CRTC aliases. */
+        case 0x3d0:
+        case 0x3d2:
         case 0x3d4:
+        case 0x3d6:
             ret = v6355->crtcreg;
             break;
+        case 0x3d1:
+        case 0x3d3:
         case 0x3d5:
+        case 0x3d7:
             ret = v6355->crtc[v6355->crtcreg];
             break;
         case 0x3da:
