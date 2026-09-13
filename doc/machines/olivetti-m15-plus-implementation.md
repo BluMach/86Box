@@ -61,7 +61,7 @@ fictional interface, so the pilot omits the HDU.
 | 80C88 and timing | Fixed 4.77 MHz 8088 core plus the calibrated M15-family PIT ratio. | Physical timer trace or a dedicated CMOS 80C88 timing model. |
 | RAM and switches | Fixed documented 512 KB; firmware-observed multiplexed switch encoding. | Board schematic or switch table confirming electrical wiring. |
 | BIOS and font | Exact local 32 KB mapping; ASCII glyphs read at `FFA6Eh`. No firmware is distributed. | A provenance-confirmed, redistributable dump would change packaging, not the map. |
-| V6355D and LCD | Existing register-compatible controller with fixed green four-level presentation. | Panel/controller identification and traces for backlight, contrast, timings and the 640×320 claim. |
+| V6355D and LCD | Existing register-compatible controller with fixed green eight-level presentation. The level count follows the original System Test; the luminance curve remains approximate. | Panel/controller identification and traces for backlight, contrast, timings and the 640×320 claim. |
 | RTC | Existing MSM6242 BCD/HOLD model at `0100h-010Fh`. | Chip identification or board trace if Plus control side effects differ. |
 | Keyboard and board probe | Shared M15-family port and switch subset with separate Plus device identity. | Keyboard firmware, protocol capture or schematic. |
 | Floppy, UART and LPT | Compatible XT-era devices on firmware-visible routes. | Controller identification and timing traces. |
@@ -77,9 +77,25 @@ System Test disk into MS-DOS 3.20 and opened `M15PLUS SYSTEM TEST` version 1.00.
 This validates the vertical slice through firmware, LCD text and floppy I/O;
 it does not yet validate every test-menu subsystem.
 
-The remaining runtime gates are the complete System Test menu, soft and hard
-reset, the Keyboard Drivers & Utilities disk, and separate 40×25, 80×25,
-320×200 and 640×200 display tests.
+The original Keyboard Drivers & Utilities disk also boots and reaches its
+five-language selector. Its supplied LCD test identifies eight intended
+monochrome levels (`BLACK`, `GREY1` through `GREY6`, and `WHITE`) and names
+320×200 four-colour and 640×200 mid-resolution graphics tests. This is direct
+software evidence for the eight-level LCD conversion. A runtime trace of that
+screen showed the exact BLACK-to-WHITE RGBI code sequence
+`7, 3, 1, F, B, 9, 8, 0`; the Plus presentation maps those observed codes
+directly. The response of the physical panel and the reduction of the eight
+remaining RGBI codes are still approximate.
+
+Runtime validation now covers soft and hard reset, 40- and 80-column startup,
+the customer test's Memory module, the complete LCD character and shade
+sequence, 320×200 four-colour graphics and 640×200 mid-resolution graphics.
+The latter screens render correctly. The aggregate Display LCD module still
+returns `FAILED`, as does System Board, while the configuration report sees
+only one 360 KB drive instead of two internal 720 KB drives. Those results are
+treated as evidence of missing board/equipment-flag behavior, not hidden as a
+successful full-machine diagnostic. The dedicated 78-key `EDIT/SHIFT` path
+also remains pending.
 
 The HDU tests are intentionally excluded: running a generic controller would
 validate the substitute, not the M15 Plus. No original media is mounted

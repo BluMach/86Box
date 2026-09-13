@@ -25,7 +25,7 @@
     "hardware": {
       "cpu": "Intel 80C88 at 4.77 MHz",
       "memory": "512 KB user RAM; 16 KB video RAM",
-      "video": "10.5-inch backlit super-twist monochrome LCD; 40/80-column text and 320×200/640×200 BIOS graphics modes",
+      "video": "10.5-inch backlit super-twist monochrome LCD; eight observed shade codes, 40/80-column text and 320×200/640×200 BIOS graphics modes",
       "floppy": "Pilot: two internal 3.5-inch, 720 KB drives",
       "rtc": "Battery-backed clock/calendar; BIOS accesses an MSM6242-compatible register set at 0100h-010Fh",
       "interfaces": "RS-232C, Centronics parallel and optional external 5.25-inch floppy; no documented external video connector",

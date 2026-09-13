@@ -2,8 +2,9 @@
 
 Status as of 2026-09-13: experimental but bootable pilot. BluMach passes every
 displayed Resident Diagnostics item, reports the documented 512 KB and boots
-the original 720 KB System Test disk into MS-DOS 3.20. The alternative 20 MB
-HDU configuration is not emulated.
+the original 720 KB System Test disk into MS-DOS 3.20. The original customer
+test also exercises both documented graphics modes and the LCD shade table.
+The alternative 20 MB HDU configuration is not emulated.
 
 For the evidence-to-model account and replacement criteria, see the
 [M15 Plus engineering notes](olivetti-m15-plus-implementation.md).
@@ -31,7 +32,11 @@ mode, but the conflict is unresolved and BluMach does not advertise 640×320.
 BIOS 1.10 programs the CGA-compatible and V6355D extended ports already used
 by the M15 family. The pilot therefore uses the fixed green monochrome V6355D
 LCD presentation, with the original BIOS glyphs `00h`–`7Fh` read from their
-mapped address. No external video connector is documented or exposed.
+mapped address. The original M15 Plus test writes the RGBI sequence
+`7, 3, 1, F, B, 9, 8, 0` for black, six greys and white. BluMach preserves
+that observed eight-level, positive-LCD ordering; the analogue response of the
+real panel remains approximate. No external video connector is documented or
+exposed.
 
 ## Recommended BluMach configuration
 
@@ -68,15 +73,20 @@ software-selected display modes.
 ## Known approximations and pending work
 
 - The available NMOS 8088 core and calibrated PIT ratio approximate an 80C88.
-- LCD green levels reproduce digital luminance relationships, not the physical
-  super-twist panel, backlight, contrast circuit or response time.
+- The eight observed LCD levels are reproduced, but their brightness curve and
+  the other eight RGBI-code reductions do not model the physical super-twist
+  panel, backlight, contrast circuit or response time.
 - The keyboard-switch block, MSM6242 RTC register behavior, UART, LPT and FDC
   are compatible models supported by BIOS analysis, not recovered board logic.
 - The proprietary HDU register block observed at `0320h-0323h` is absent.
 - Characters `80h`–`FFh` retain the generic high-character fallback.
-- The cold POST and original System Test disk boot are validated. Full
-  System Test menus, resets, display-mode probes and the Keyboard Drivers &
-  Utilities disk still require runtime validation.
+- Cold POST, soft and hard reset, 40/80-column startup, the original System
+  Test boot, the LCD character/shade screens and 320×200/640×200 graphics are
+  validated. The customer test's Memory module passes. Its System Board and
+  Display LCD modules still return `FAILED`, and its configuration report sees
+  one 360 KB drive rather than the configured pair of 720 KB drives; these are
+  explicit evidence of missing board/equipment-flag behavior. The special
+  78-key `EDIT/SHIFT` path also remains pending.
 
 ## Principal references
 
