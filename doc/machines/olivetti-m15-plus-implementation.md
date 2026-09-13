@@ -88,14 +88,14 @@ directly. The response of the physical panel and the reduction of the eight
 remaining RGBI codes are still approximate.
 
 Runtime validation now covers soft and hard reset, 40- and 80-column startup,
-the customer test's Memory module, the complete LCD character and shade
-sequence, 320×200 four-colour graphics and 640×200 mid-resolution graphics.
-The latter screens render correctly. The aggregate Display LCD module still
-returns `FAILED`, as does System Board, while the configuration report sees
-only one 360 KB drive instead of two internal 720 KB drives. Those results are
-treated as evidence of missing board/equipment-flag behavior, not hidden as a
-successful full-machine diagnostic. The dedicated 78-key `EDIT/SHIFT` path
-also remains pending.
+the customer test's Memory, System Board and Display LCD modules, the complete
+LCD character and shade sequence, 320×200 four-colour graphics and 640×200
+mid-resolution graphics. All three modules return `PASSED`, and the
+configuration report identifies both internal 720 KB drives after the FDC
+output-register, CRTC-alias and autonomous RTC corrections. The dedicated
+78-key `EDIT/SHIFT` latch, editing keys, alternate F1-F10 codes and integrated
+numeric keypad are implemented from the manual and `KBD.CUS` disassembly, but
+their final original-utility run remains pending.
 
 The HDU tests are intentionally excluded: running a generic controller would
 validate the substitute, not the M15 Plus. No original media is mounted
@@ -120,8 +120,9 @@ but false design.
 
 - `src/machine/m_xt.c`: 32 KB firmware mapping and shared M15-family setup;
 - `src/machine/machine_table.c`: fixed CPU, RAM, video and floppy identity;
-- `src/device/kbc_xt.c`: separate Plus device identity over the observed
-  keyboard/switch behavior;
+- `src/device/kbc_xt.c`: separate Plus device identity plus the documented
+  latching `EDIT/SHIFT` transformations and diagnostic-observed F-key bank;
 - `src/video/vid_cga_v6355.c`: fixed green V6355D-compatible LCD rendering;
 - `src/qt/catalog/source/machines/olivetti/olivetti-m15-plus/`: multilingual
-  sheet and declarative dual-floppy creation template.
+  sheet and declarative sales-configuration selector; the dual-floppy model is
+  creatable and the documented 20 MB HDU model is visible but disabled.

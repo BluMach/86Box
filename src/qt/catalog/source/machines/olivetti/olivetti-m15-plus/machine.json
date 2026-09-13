@@ -12,7 +12,7 @@
     "status": "experimental",
     "period": "1988",
     "aliases": ["Olivetti M-15 Plus", "Olivetti M15 PLUS"],
-    "tags": ["80C88", "4.77 MHz", "XT-compatible", "backlit LCD", "portable", "720 KB", "dual floppy"],
+    "tags": ["80C88", "4.77 MHz", "XT-compatible", "backlit LCD", "portable", "720 KB", "dual floppy", "20 MB HDU"],
     "facets": {
       "form_factor": ["laptop"],
       "mobility": ["portable"],
@@ -29,7 +29,7 @@
       "floppy": "Pilot: two internal 3.5-inch, 720 KB drives",
       "rtc": "Battery-backed clock/calendar; BIOS accesses an MSM6242-compatible register set at 0100h-010Fh",
       "interfaces": "RS-232C, Centronics parallel and optional external 5.25-inch floppy; no documented external video connector",
-      "keyboard": "Detachable 78-key keyboard",
+      "keyboard": "Detachable 78-key keyboard with latching EDIT/SHIFT, integrated numeric keypad and ten function keys",
       "hard_disk": "A separate commercial configuration used one 720 KB floppy and a 20 MB internal HDU; its proprietary controller is not emulated"
     },
     "firmware": {
@@ -49,10 +49,29 @@
       "status": "experimental",
       "directory_prefix": "olivetti-m15-plus",
       "facts": [
-        {"label_key": "creation.label.commercial_model", "value_key": "product.olivetti-m15-plus.creation.model"},
         {"label_key": "creation.label.memory", "value_key": "product.olivetti-m15-plus.creation.memory"}
       ],
-      "fields": [],
+      "fields": [
+        {
+          "id": "commercial_model",
+          "label_key": "creation.label.commercial_model",
+          "default": "dual-floppy",
+          "choices": [
+            {
+              "id": "dual-floppy",
+              "label_key": "product.olivetti-m15-plus.creation.variant.dual_floppy",
+              "status": "experimental",
+              "set": []
+            },
+            {
+              "id": "hdu-20mb",
+              "label_key": "product.olivetti-m15-plus.creation.variant.hdu_20mb",
+              "status": "unavailable",
+              "set": []
+            }
+          ]
+        }
+      ],
       "note_keys": ["product.olivetti-m15-plus.creation.note", "product.olivetti-m15-plus.creation.hdu_note"],
       "configuration": [
         {"section": "General", "values": {"vid_renderer": "qt_software", "time_sync": "disabled"}},
