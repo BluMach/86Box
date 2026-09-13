@@ -1182,6 +1182,17 @@ hdc_write(uint16_t port, uint8_t val, void *priv)
             xta_log("%s: WriteMASK(%02X)\n", dev->name, val);
 #endif
             dev->intr = val;
+            if (dev->type == 8) {
+                /* The M15 Plus HDU host gate enables and masks its dedicated
+                   DMA channel through this register.  Its BIOS deliberately
+                   leaves 8237 channel 3 masked while programming address,
+                   count and mode, then starts the transfer here. */
+                dma_e |= 1 << dev->dma;
+                if (val & DMA_ENA)
+                    dma_m &= ~(1 << dev->dma);
+                else
+                    dma_m |= 1 << dev->dma;
+            }
             break;
 
         default:
