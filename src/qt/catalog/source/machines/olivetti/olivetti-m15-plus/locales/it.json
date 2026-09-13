@@ -1,0 +1,20 @@
+{
+  "product.olivetti-m15-plus.summary": "Portatile 80C88 del 1988 con 512 KB, tastiera rimovibile e LCD monocromatico retroilluminato. È disponibile un pilota sperimentale a due floppy.",
+  "product.olivetti-m15-plus.history": "L'M15 Plus è un successore distinto nella famiglia portatile M15 di Olivetti. Combinava un 80C88 a 4,77 MHz, 512 KB, tastiera rimovibile e LCD retroilluminato da 10,5 pollici. Olivetti offriva due floppy interni da 720 KB oppure un floppy e un HDU da 20 MB. Il pilota attuale rappresenta soltanto la versione a due floppy.",
+  "product.olivetti-m15-plus.warning": "PILOTA SPERIMENTALE: POST, Resident Diagnostics, 512 KB e avvio dal dischetto System Test originale da 720 KB sono convalidati. HDU, risposta esatta dell'LCD, protocollo completo della tastiera, matrice dei reset e logica di scheda restano indisponibili, approssimati o in sospeso.",
+  "product.olivetti-m15-plus.creation.model": "M15 Plus a due floppy (1988), LCD retroilluminato e due unità interne da 720 KB",
+  "product.olivetti-m15-plus.creation.memory": "512 KB — configurazione fissa documentata",
+  "product.olivetti-m15-plus.creation.note": "Questo pilota crea soltanto la configurazione documentata con due floppy interni; l'unità esterna opzionale da 360 KB non è rappresentata.",
+  "product.olivetti-m15-plus.creation.hdu_note": "La configurazione commerciale con HDU da 20 MB non è disponibile finché non saranno identificati controllore e comportamento I/O.",
+  "product.olivetti-m15-plus.technical.cpu_bus": "Intel 80C88 a 4,77 MHz con 512 KB di RAM utente. Il core disponibile e il timer calibrato restano approssimazioni temporali.",
+  "product.olivetti-m15-plus.technical.video": "LCD monocromatico super-twist retroilluminato. La guida documenta testo 40/80 colonne e grafica 320×200/640×200; l'affermazione contraddittoria di 640×320 della brochure non è esposta come modalità emulata.",
+  "product.olivetti-m15-plus.technical.switches": "Il BIOS 1.10 decodifica gli stessi bit multiplexati di memoria e avvio a 40/80 colonne dell'M15. La memoria è fissa ai 512 KB documentati; Configura espone solo la scelta testo sostenuta dal firmware.",
+  "product.olivetti-m15-plus.technical.firmware": "BIOS 1.10 locale: 32 KiB mappati in F8000h-FFFFFh, data 06/03/88. Rimane locale fino alla verifica di provenienza e diritti.",
+  "product.olivetti-m15-plus.technical.implementation": "Il pilota riusa i percorsi basati su prove per commutatori/tastiera della famiglia M15, RTC MSM6242 e compatibilità V6355D, mantenendo macchina distinta e mappa firmware da 32 KiB.",
+  "product.olivetti-m15-plus.technical.status": "L'avvio a freddo raggiunge il BIOS 1.10, supera tutti gli elementi mostrati da Resident Diagnostics, indica 512/512 KB, avvia il System Test originale da 720 KB con MS-DOS 3.20 e apre M15PLUS SYSTEM TEST 1.00. Menu completo, reset e modalità video restano da convalidare.",
+  "product.olivetti-m15-plus.technical.limitations": "L'HDU proprietario su 0320h-0323h non è emulato. Luminanza LCD, calibrazione timer, protocollo tastiera, elettronica FDC e logica di scheda sono approssimati o ignoti.",
+  "product.olivetti-m15-plus.source.manual": "Guida d'installazione e uso Olivetti M15 Plus, prima edizione (marzo 1988)",
+  "product.olivetti-m15-plus.source.brochure": "Brochure Olivetti M15 Plus 01200090 G (marzo 1988)",
+  "product.olivetti-m15-plus.source.firmware": "Indice e metadati del BIOS 1.10 M15 Plus (Minus Zero Degrees)",
+  "product.olivetti-m15-plus.source.software": "Catalogo System Test e Keyboard Drivers & Utilities M15 Plus (Olivrea)"
+}

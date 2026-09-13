@@ -1081,6 +1081,24 @@ const device_t kbc_xt_m15_device = {
     .config        = kbc_xt_m15_config
 };
 
+/* The M15 Plus BIOS retains the M15 family's port 60h-64h keyboard and
+   multiplexed board-switch contract.  Keep a distinct device identity so the
+   Configure dialog describes the selected machine without duplicating the
+   shared behavioural implementation. */
+const device_t kbc_xt_m15plus_device = {
+    .name          = "Olivetti M15 Plus Keyboard",
+    .internal_name = "kbc_xt_m15plus",
+    .flags         = DEVICE_ISA,
+    .local         = KBD_TYPE_M15,
+    .init          = kbd_init,
+    .close         = kbd_close,
+    .reset         = kbd_reset,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = kbc_xt_m15_config
+};
+
 const device_t kbc_xt_zenith_device = {
     .name          = "Zenith XT Keyboard Controller",
     .internal_name = "kbc_xt_zenith",

@@ -1,0 +1,20 @@
+{
+  "product.olivetti-m15-plus.summary": "Portable 80C88 de 1988 avec 512 Ko, clavier amovible et LCD monochrome rétroéclairé. Un pilote expérimental à deux lecteurs est disponible.",
+  "product.olivetti-m15-plus.history": "Le M15 Plus est un successeur distinct dans la famille portable M15 d'Olivetti. Il associait un 80C88 à 4,77 MHz, 512 Ko, un clavier amovible et un LCD rétroéclairé de 10,5 pouces. Olivetti proposait soit deux lecteurs internes de 720 Ko, soit un lecteur et un HDU de 20 Mo. Le pilote actuel ne représente que la version à deux lecteurs.",
+  "product.olivetti-m15-plus.warning": "PILOTE EXPÉRIMENTAL : POST, Resident Diagnostics, 512 Ko et démarrage depuis la disquette System Test originale de 720 Ko sont validés. Le HDU, la réponse exacte du LCD, le protocole clavier complet, les réinitialisations et la logique de carte restent indisponibles, approximatifs ou en attente.",
+  "product.olivetti-m15-plus.creation.model": "M15 Plus à deux lecteurs (1988), LCD rétroéclairé et deux unités internes de 720 Ko",
+  "product.olivetti-m15-plus.creation.memory": "512 Ko — configuration fixe documentée",
+  "product.olivetti-m15-plus.creation.note": "Ce pilote crée uniquement la configuration documentée à deux lecteurs internes ; le lecteur externe optionnel de 360 Ko n'est pas représenté.",
+  "product.olivetti-m15-plus.creation.hdu_note": "La configuration commerciale avec HDU de 20 Mo reste indisponible jusqu'à l'identification de son contrôleur et de ses E/S.",
+  "product.olivetti-m15-plus.technical.cpu_bus": "Intel 80C88 à 4,77 MHz avec 512 Ko de RAM utilisateur. Le cœur disponible et le minuteur calibré restent des approximations temporelles.",
+  "product.olivetti-m15-plus.technical.video": "LCD monochrome super-twist rétroéclairé. Le guide documente le texte 40/80 colonnes et les graphismes 320×200/640×200 ; l'affirmation contradictoire de 640×320 de la brochure n'est pas exposée comme mode émulé.",
+  "product.olivetti-m15-plus.technical.switches": "Le BIOS 1.10 décode les mêmes bits multiplexés de mémoire et de démarrage 40/80 colonnes que le M15. La mémoire est fixée aux 512 Ko documentés ; Configurer n'expose que le choix de texte confirmé par le micrologiciel.",
+  "product.olivetti-m15-plus.technical.firmware": "BIOS 1.10 local : 32 Kio mappés de F8000h à FFFFFh, date 06/03/88. Il reste local jusqu'à vérification de sa provenance et de ses droits.",
+  "product.olivetti-m15-plus.technical.implementation": "Le pilote réutilise les chemins étayés de commutateurs/clavier de la famille M15, du RTC MSM6242 et de compatibilité V6355D, tout en conservant une machine distincte et sa cartographie de 32 Kio.",
+  "product.olivetti-m15-plus.technical.status": "Le démarrage à froid atteint le BIOS 1.10, réussit tous les éléments affichés de Resident Diagnostics, indique 512/512 Ko, démarre la disquette System Test originale de 720 Ko sous MS-DOS 3.20 et ouvre M15PLUS SYSTEM TEST 1.00. Menu complet, réinitialisations et modes d'affichage restent à valider.",
+  "product.olivetti-m15-plus.technical.limitations": "Le HDU propriétaire sur 0320h-0323h n'est pas émulé. Luminance LCD, étalonnage du minuteur, protocole clavier, électronique FDC et logique de carte sont approximatifs ou inconnus.",
+  "product.olivetti-m15-plus.source.manual": "Guide d'installation et d'utilisation Olivetti M15 Plus, première édition (mars 1988)",
+  "product.olivetti-m15-plus.source.brochure": "Brochure Olivetti M15 Plus 01200090 G (mars 1988)",
+  "product.olivetti-m15-plus.source.firmware": "Index et métadonnées du BIOS 1.10 du M15 Plus (Minus Zero Degrees)",
+  "product.olivetti-m15-plus.source.software": "Catalogue System Test et Keyboard Drivers & Utilities du M15 Plus (Olivrea)"
+}
