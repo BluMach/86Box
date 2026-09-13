@@ -2302,7 +2302,12 @@ machine_xt_olivetti_m15plus_init(const machine_t *model)
     if (bios_only || !ret)
         return ret;
 
-    return machine_xt_olivetti_m15_family_init(model, &kbc_xt_m15plus_device);
+    ret = machine_xt_olivetti_m15_family_init(model, &kbc_xt_m15plus_device);
+
+    if (ret && (hdc_current[0] == HDC_INTERNAL))
+        device_add(&xta_olivetti_m15plus_device);
+
+    return ret;
 }
 
 /* GC100A */

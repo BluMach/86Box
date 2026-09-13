@@ -4,7 +4,8 @@ Status as of 2026-09-13: experimental but bootable pilot. BluMach passes every
 displayed Resident Diagnostics item, reports the documented 512 KB and boots
 the original 720 KB System Test disk into MS-DOS 3.20. The original customer
 test also exercises both documented graphics modes and the LCD shade table.
-The alternative 20 MB HDU configuration is not emulated.
+The alternative 20 MB HDU configuration now has an experimental host-interface
+model and still requires validation with the original HDU diagnostics.
 
 For the evidence-to-model account and replacement criteria, see the
 [M15 Plus engineering notes](olivetti-m15-plus-implementation.md).
@@ -18,9 +19,15 @@ super-twist monochrome LCD.
 
 Olivetti documented two commercial storage configurations: two internal
 3.5-inch 720 KB floppy drives, or one such drive plus a 20 MB internal HDU.
-Both could use an optional external 5.25-inch 360 KB drive. The pilot exposes
-only the two internal 720 KB drives. The HDU controller cannot be substituted
-faithfully until its hardware and port behavior are identified.
+Both could use an optional external 5.25-inch 360 KB drive. The catalogue
+offers both internal configurations; the external unit is not represented.
+
+Olivetti calls the internal hard-disk link SCSI. The service guide names Epson
+HMD755 and Fujitsu FK308S-39R mechanisms, while BIOS 1.10 exposes a six-byte
+command interface at `0320h-0323h`, IRQ 5 and DMA 3. BluMach therefore gives
+the M15 Plus a dedicated HDU/SCSI device while reusing the compatible XTA host
+state machine for that observed register contract. This does not claim that
+the unrecovered physical bridge was itself a generic XTA controller.
 
 ## Display
 
@@ -44,12 +51,13 @@ exposed.
 - CPU: Intel 80C88-compatible core at 4.77 MHz;
 - memory: fixed 512 KB;
 - video: fixed internal V6355D-compatible green LCD;
-- floppy: two internal 3.5-inch 720 KB drives;
-- hard disk: none.
+- storage: either two internal 3.5-inch 720 KB drives, or one such drive plus
+  the experimental 20 MB HDU/SCSI device;
+- hard disk geometry: 615 cylinders, 4 heads and 17 sectors per track.
 
-The historical catalogue creates this configuration in the common declarative
-modal. Its notes retain the unavailable HDU configuration rather than silently
-approximating it with a generic controller.
+The historical catalogue creates either sales configuration in the common
+declarative modal. The HDU choice generates a blank 20 MB image and records the
+host-state-machine approximation visibly.
 
 ## Firmware
 
@@ -78,7 +86,10 @@ software-selected display modes.
   panel, backlight, contrast circuit or response time.
 - The keyboard-switch block, MSM6242 RTC register behavior, UART, LPT and FDC
   are compatible models supported by BIOS analysis, not recovered board logic.
-- The proprietary HDU register block observed at `0320h-0323h` is absent.
+- The HDU host register block is implemented at `0320h-0323h`, IRQ 5 and DMA 3.
+  The unidentified physical SCSI bridge and drive firmware remain approximate;
+  raw disk images cannot retain controller ECC bytes, so READ LONG supplies a
+  stable four-byte diagnostic field and WRITE LONG discards it.
 - Characters `80h`–`FFh` retain the generic high-character fallback.
 - Cold POST, soft and hard reset, 40/80-column startup, the original System
   Test boot, the LCD character/shade screens and 320×200/640×200 graphics are
@@ -90,6 +101,8 @@ software-selected display modes.
 
 ## Principal references
 
+- *Olivetti M15 Plus Service Guide*, system-board and mass-storage sections:
+  <https://www.ardent-tool.com/Olivetti/Docs/service_guide/systems2/capk.pdf>
 - *Olivetti M15 Plus Installation and Operations Guide*, first edition,
   March 1988: <https://mail.minuszerodegrees.net/manuals/Olivetti/Olivetti%20-%20M15%20Plus%20-%20Installation%20and%20Operations%20Guide.pdf>
 - *Olivetti Personal Computer M15 Plus* brochure, 01200090 G, March 1988:

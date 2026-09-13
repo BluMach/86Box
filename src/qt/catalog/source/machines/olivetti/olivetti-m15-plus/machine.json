@@ -12,7 +12,7 @@
     "status": "experimental",
     "period": "1988",
     "aliases": ["Olivetti M-15 Plus", "Olivetti M15 PLUS"],
-    "tags": ["80C88", "4.77 MHz", "XT-compatible", "backlit LCD", "portable", "720 KB", "dual floppy", "20 MB HDU"],
+    "tags": ["80C88", "4.77 MHz", "XT-compatible", "backlit LCD", "portable", "720 KB", "dual floppy", "20 MB HDU", "SCSI"],
     "facets": {
       "form_factor": ["laptop"],
       "mobility": ["portable"],
@@ -30,7 +30,7 @@
       "rtc": "Battery-backed clock/calendar; BIOS accesses an MSM6242-compatible register set at 0100h-010Fh",
       "interfaces": "RS-232C, Centronics parallel and optional external 5.25-inch floppy; no documented external video connector",
       "keyboard": "Detachable 78-key keyboard with latching EDIT/SHIFT, integrated numeric keypad and ten function keys",
-      "hard_disk": "A separate commercial configuration used one 720 KB floppy and a 20 MB internal HDU; its proprietary controller is not emulated"
+      "hard_disk": "Alternative commercial configuration: one 720 KB floppy and one 20 MB internal HDU. Olivetti labels the drive interface SCSI; the integrated host adapter is modelled through its BIOS-observed XT-compatible register contract"
     },
     "firmware": {
       "known_sets": ["System BIOS 1.10 (1988-06-03; local custody only)"],
@@ -38,7 +38,7 @@
       "identity_note": "The 32 KB BIOS maps at F8000h-FFFFFh. Provenance and redistribution rights remain pending."
     },
     "storage": {
-      "bus": "Pilot: two internal floppy drives; proprietary HDU unavailable",
+      "bus": "Two internal floppy drives, or one floppy plus an integrated 20 MB HDU/SCSI adapter with an XT-compatible host interface",
       "official_drives": ["Two internal 3.5-inch 720 KB drives", "Alternative: one internal 720 KB drive plus 20 MB HDU", "Optional external 5.25-inch 360 KB drive"]
     },
     "relationships": {
@@ -66,8 +66,40 @@
             {
               "id": "hdu-20mb",
               "label_key": "product.olivetti-m15-plus.creation.variant.hdu_20mb",
-              "status": "unavailable",
-              "set": []
+              "status": "experimental",
+              "set": [
+                {
+                  "section": "Floppy and CD-ROM drives",
+                  "key": "fdd_02_type",
+                  "value": "none"
+                },
+                {
+                  "section": "Storage controllers",
+                  "key": "hdc_1",
+                  "value": "internal"
+                },
+                {
+                  "section": "Hard disks",
+                  "key": "hdd_01_fn",
+                  "value": "olivetti-m15-plus-hdu-20mb.img"
+                },
+                {
+                  "section": "Hard disks",
+                  "key": "hdd_01_parameters",
+                  "value": "17, 4, 615, 0, xta"
+                },
+                {
+                  "section": "Hard disks",
+                  "key": "hdd_01_xta_channel",
+                  "value": 0
+                }
+              ],
+              "generated_files": [
+                {
+                  "path": "olivetti-m15-plus-hdu-20mb.img",
+                  "size": 21411840
+                }
+              ]
             }
           ]
         }
@@ -78,7 +110,8 @@
         {"section": "Machine", "values": {"cpu_family": "8088", "cpu_speed": 4772728, "cpu_multi": 1, "cpu_use_dynarec": 0, "mem_size": 512}},
         {"section": "Video", "values": {"gfxcard": "internal"}},
         {"section": "Input devices", "values": {"keyboard_type": "keyboard_pc_xt", "mouse_type": "none"}},
-        {"section": "Floppy and CD-ROM drives", "values": {"fdd_01_type": "35_2dd", "fdd_02_type": "35_2dd"}}
+        {"section": "Floppy and CD-ROM drives", "values": {"fdd_01_type": "35_2dd", "fdd_02_type": "35_2dd"}},
+        {"section": "Storage controllers", "values": {"hdc_1": "none"}}
       ],
       "generated_files": []
     },

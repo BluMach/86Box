@@ -2,10 +2,11 @@
 
 ## Outcome and evidence boundary
 
-BluMach's first M15 Plus implementation is an **experimental dual-floppy
+BluMach's M15 Plus implementation is an **experimental dual-configuration
 pilot**. It gives BIOS 1.10 a distinct 32 KB ROM map and reuses only those M15
 family interfaces for which the Plus firmware shows the same guest-visible
-contract. The 20 MB HDU configuration remains unavailable.
+contract. The catalogue can create either the dual-floppy system or the
+commercial one-floppy/20 MB HDU configuration.
 
 Here, *documented* means stated by contemporary Olivetti material, *observed*
 means visible in static firmware analysis or a reproducible emulator test,
@@ -49,10 +50,22 @@ That is the same guest-visible MSM6242 contract already implemented for M15.
 The floppy path is provisionally supplied by the compatible XT FDC used by the
 working M15 model.
 
-By contrast, the HDU routines poll and command ports `0320h-0323h`. No current
-evidence identifies their controller, DMA behavior, geometry translation or
-interrupt routing. A generic XT-IDE or MFM card would make software run under a
-fictional interface, so the pilot omits the HDU.
+The HDU routines poll and command ports `0320h-0323h`, use IRQ 5 and DMA 3, and
+issue six-byte Xebec/SASI-style commands. The BIOS parameter table describes
+615 cylinders, 4 heads and 17 sectors per track, exactly 21,411,840 bytes. The
+official service guide calls the interface SCSI and names Epson HMD755 and
+Fujitsu FK308S-39R mechanisms. The surviving HMD755 data describes an IBM XT
+bus variant, while the Fujitsu unit is a SCSI mechanism. This mixed evidence is
+consistent with an Olivetti host bridge whose physical implementation has not
+yet been identified.
+
+The emulator consequently registers a dedicated M15 Plus HDU/SCSI device, not
+a selectable generic card. Internally it reuses the mature XTA state machine
+because that matches the BIOS-visible ports, handshaking, IRQ, DMA and command
+packet. Missing sector-buffer and READ/WRITE LONG commands were added. A raw
+image stores only 512-byte sectors, so READ LONG synthesizes four stable zero
+ECC bytes and WRITE LONG ignores the received ECC field. Those choices are
+explicit diagnostic approximations, not claims about the physical bridge.
 
 ## Compromise ledger
 
@@ -65,7 +78,7 @@ fictional interface, so the pilot omits the HDU.
 | RTC | Existing MSM6242 BCD/HOLD model at `0100h-010Fh`. | Chip identification or board trace if Plus control side effects differ. |
 | Keyboard and board probe | Shared M15-family port and switch subset with separate Plus device identity. | Keyboard firmware, protocol capture or schematic. |
 | Floppy, UART and LPT | Compatible XT-era devices on firmware-visible routes. | Controller identification and timing traces. |
-| 20 MB HDU | Deliberately unavailable. | Controller identity, port semantics, IRQ/DMA routing and a safe disk geometry test. |
+| 20 MB HDU | Dedicated integrated device at `0320h-0323h`, IRQ 5 and DMA 3; XTA host state machine; fixed 615/4/17 image; synthetic long-sector ECC. | Controller/bridge identification, board trace, drive firmware and original HDU diagnostic results. |
 
 ## Validation ladder
 
@@ -97,9 +110,11 @@ output-register, CRTC-alias and autonomous RTC corrections. The dedicated
 numeric keypad are implemented from the manual and `KBD.CUS` disassembly, but
 their final original-utility run remains pending.
 
-The HDU tests are intentionally excluded: running a generic controller would
-validate the substitute, not the M15 Plus. No original media is mounted
-writable, and proprietary firmware, manuals and disks remain outside Git.
+The HDU path is a new validation rung: compilation and catalogue creation prove
+the configuration can be assembled, while the original HDU test must still
+establish command timing, DMA completion and error reporting. No original media
+is mounted writable, and proprietary firmware, manuals and disks remain outside
+Git.
 
 ## Rejected shortcuts and replacement criteria
 
@@ -110,19 +125,26 @@ MFM template because firmware accesses a different register block. Finally, it
 does not turn the brochure's 640×320 wording into a mode without a trace that
 explains how software selects it.
 
+A generic XT-IDE or MFM card remains rejected because either would expose a
+different host contract. Reuse of the XTA state machine is narrower: it sits
+behind a machine-specific integrated device and implements only the contract
+observed in the M15 Plus BIOS.
+
 A later revision should replace an approximation only when a schematic,
 readable board photograph, physical trace, controller dump or repeatable
 machine/software test establishes a stronger contract. Until then the narrow
-dual-floppy model is easier to audit and less likely to fossilize a convenient
-but false design.
+model and its declared SCSI/XTA boundary are easier to audit and less likely to
+fossilize a convenient but false design.
 
 ## Implementation map
 
 - `src/machine/m_xt.c`: 32 KB firmware mapping and shared M15-family setup;
 - `src/machine/machine_table.c`: fixed CPU, RAM, video and floppy identity;
+- `src/disk/hdc_xta.c`: machine-specific integrated HDU/SCSI device and the
+  BIOS-observed host commands, including buffer and long-sector transfers;
 - `src/device/kbc_xt.c`: separate Plus device identity plus the documented
   latching `EDIT/SHIFT` transformations and diagnostic-observed F-key bank;
 - `src/video/vid_cga_v6355.c`: fixed green V6355D-compatible LCD rendering;
 - `src/qt/catalog/source/machines/olivetti/olivetti-m15-plus/`: multilingual
-  sheet and declarative sales-configuration selector; the dual-floppy model is
-  creatable and the documented 20 MB HDU model is visible but disabled.
+  sheet and declarative sales-configuration selector for both documented
+  internal storage configurations.
