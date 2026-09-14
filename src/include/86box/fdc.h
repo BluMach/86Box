@@ -18,6 +18,8 @@
  *          Copyright 2016-2020 Miran Grca.
  *          Copyright 2018-2020 Fred N. van Kempen.
  *          Copyright 2025 Toni Riikonen.
+ *
+ * BluMach modifications: rtzor, Project BluMach, 2026.
  */
 #ifndef EMU_FDC_H
 #define EMU_FDC_H

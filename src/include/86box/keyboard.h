@@ -15,6 +15,8 @@
  *          Copyright 2008-2019 Sarah Walker.
  *          Copyright 2016-2025 Miran Grca.
  *          Copyright 2017-2019 Fred N. van Kempen.
+ *
+ * BluMach modifications: rtzor, Project BluMach, 2026.
  */
 #ifndef EMU_KEYBOARD_H
 #define EMU_KEYBOARD_H
